@@ -1,5 +1,12 @@
 # React + Vite
 
+This is a react app I created by following along with this youtube video. It was created to give me a better understanding of the core basics of react, such as state, components, hooks and prompts. 
+In addition I use appwrite as a backend and to host a simple database.
+This app allows you to search for millions of movies using the TMDB API has an efficient searching mechanism that creates the trending movies section and uses debouncing to create a sophisticated searching experience.
+
+
+
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
