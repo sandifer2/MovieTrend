@@ -78,12 +78,3 @@ import { checkIfFavorite, toggleFavorite } from '../appwrite'
 }
 
 export default MovieCard
-/* 
-1. use state to track if movie is favorited
-2. handle click and hover
-3. manage visuals 
-4. make api calls to appwrite db
-5. update state based on api calls 
-
-
-*/
