@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { checkIfFavorite, toggleFavorite } from '../appwrite'
+import { checkIfFavorite, toggleFavorite } from '../services/appwrite'
 
 
 
