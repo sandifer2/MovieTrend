@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import FavoritesPage from './pages/FavoritesPage';
-import Navigation from './pages/Navigation'
+import Navigation from './components/Navigation';
+// import FavoritesPage from './pages/FavoritesPage';
 
 
 const App = () => {
@@ -11,11 +11,12 @@ const App = () => {
       <Navigation />
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/favorites' element={<FavoritesPage />} />
-        <Route path='*' element={<NotFoundPage />} />
+        
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
+
