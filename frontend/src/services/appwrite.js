@@ -55,7 +55,10 @@ export const getTrendingMovies = async() => {
 
 export const getFavoriteMovies = async() => {
     try{
-        const result = await database.listDocuments(DATABASE_ID, FAV_COLLECTION_ID);
+        const result = await database.listDocuments(DATABASE_ID, FAV_COLLECTION_ID, [
+            Query.limit(20),
+            Query.orderDesc("vote_average")
+        ]);
         return result.documents;
     } catch(error) {
         

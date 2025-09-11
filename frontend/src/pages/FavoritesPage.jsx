@@ -19,16 +19,23 @@ const API_OPTIONS = {
 
 const FavoritesPage = () => {
     const [favoriteMovies, setFavoriteMovies] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
 
 
 const loadFavoriteMovies = async () => {
-try {
-    const movies = await getFavoriteMovies();
-    setFavoriteMovies(movies);
-} catch (error) {
-    console.error('Error loading favorite movies:', error);
-}
+    setIsLoading(true);
+    setErrorMessage('');
+    try {
+        const movies = await getFavoriteMovies();
+        setFavoriteMovies(movies);
+    } catch (error) {
+        console.error('Error loading favorite movies:', error);
+        setErrorMessage('Failed to load favorite movies');
+    } finally {
+        setIsLoading(false);
+    }
 }
 
 useEffect(() => {
@@ -42,17 +49,30 @@ useEffect(() => {
             <header>
                 <h1>Your <span className='text-gradient'>Favorites</span></h1>
             </header>
-            {favoriteMovies.length > 0 &&(
-            <section className='favorite-movies'>
-                <ul>
-                    {favoriteMovies.map((movie, index) => (
-                        <li key={movie.$id}>
-                            <p>{index +1} </p>
-                            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_url}`} alt={movie.title} />
-                        </li>
-                    ))}
-                </ul>
-            </section>
+
+            {isLoading ? (
+                <Spinner />
+            ) : errorMessage ? (
+                <p className='text-red-500'>{errorMessage}</p>
+            ) : (
+                <section className='all-movies'>
+                    <ul>
+                        {favoriteMovies.map((movie) => (
+                           <MovieCard 
+                                key={movie.$id} 
+                                movie={{
+                                    id: movie.movie_id,
+                                    title: movie.title,
+                                    poster_path: movie.poster_url,
+                                    overview: movie.overview,
+                                    release_date: movie.release_date,
+                                    vote_average: movie.vote_average,
+                                    genre_ids: JSON.parse(movie.genre_ids || '[]')
+                                }} 
+                            />
+                        ))}
+                    </ul>
+                </section>
             )}
             
 
