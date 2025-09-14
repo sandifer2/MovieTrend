@@ -53,6 +53,19 @@ export const getTrendingMovies = async() => {
 
 }
 
+export const getFavoriteMovies = async() => {
+    try{
+        const result = await database.listDocuments(DATABASE_ID, FAV_COLLECTION_ID, [
+            Query.limit(20),
+            Query.orderDesc("vote_average")
+        ]);
+        return result.documents;
+    } catch(error) {
+        
+    }
+}
+
+
 export const checkIfFavorite = async (movieId) => {
     try{
         const result = await database.listDocuments(
@@ -125,17 +138,3 @@ export const toggleFavorite = async (movie, isFavorited) => {
     }
 }
 
-export const getAllFavorites = async () => {
-    try{
-        const result = await database.listDocuments(
-            DATABASE_ID,
-            FAV_COLLECTION_ID
-        );
-
-        return result.documents;
-
-    } catch(error) {
-        console.error('Unable to get all favorite movies', error);
-        return [];
-    }
-}
