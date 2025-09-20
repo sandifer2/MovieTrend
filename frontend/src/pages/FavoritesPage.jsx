@@ -4,16 +4,7 @@ import Spinner from '../components/Spinner';
 import { getFavoriteMovies } from '../services/appwrite';
 
 
-const API_BASE_URL = 'https://api.themoviedb.org/3'
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY
-const API_READ_TOKEN = import.meta.env.VITE_TMDB_API_READ_TOKEN
-const API_OPTIONS = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${API_READ_TOKEN}`
-    }
-}
+
 
 
 
