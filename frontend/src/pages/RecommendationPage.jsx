@@ -1,6 +1,9 @@
 import React, { useEffect, useState} from 'react';
 import Spinner from '../components/Spinner';
 import MovieCard from '../components/MovieCard';
+import PromptBox from '../components/PromptBox';
+import ChatBox from '../components/ChatBox';
+
 
 
 
@@ -11,16 +14,16 @@ const RecommendationPage = () => {
             <div className='wrapper'>
                 <header>
                     <h1>Your <span className='text-gradient'>AI</span> Movie Finding Agent</h1>
+                    <img src='./hero.png' alt='hero banner'/>
                 </header>
-                <section className='movie-card'>
-                    <h6 className='text-white'>this is not gonna work</h6>
-                </section>
-
+                
+               <ChatBox/>
 
 
 
             </div>
-        </div>)
+        </div>
+        )
 }
 
 export default RecommendationPage;
