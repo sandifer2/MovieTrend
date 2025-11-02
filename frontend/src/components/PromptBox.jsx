@@ -24,7 +24,4 @@ return (
 }
 
 
-
-
-
 export default PromptBox;

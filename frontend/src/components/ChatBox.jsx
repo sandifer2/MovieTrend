@@ -2,6 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react';
 import Particles from 'react-tsparticles';
 import { loadSlim } from 'tsparticles-slim';
 import PromptBox from './PromptBox';
+import AIMsg from './AIMsg';
+import UserMsg from './UserMsg';
 
 
 const ChatBox = () =>{
@@ -65,7 +67,8 @@ return (
             className='absolute inset-0 rounded-3xl'
         />
         <div className='relative z-10 flex-1 overflow-y-auto scrollbar-thin scrollbar-track-transparent scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30'>
-
+            <AIMsg msg="How can I help?" />
+            <UserMsg msg="Please help me find a movie" />
         </div>
         <div className='relative z-10 mt-4'>
             <PromptBox/>
@@ -75,9 +78,5 @@ return (
 
 
 }
-
-
-
-
 
 export default ChatBox;
