@@ -106,7 +106,9 @@ useEffect(() =>{
           </section>
             
           
-        )}
+        )} 
+
+
         <section className='all-movies'>
           <h2>All Movies</h2>
 
@@ -114,6 +116,8 @@ useEffect(() =>{
           <Spinner />
         ) : errorMessage ? (
           <p className='text-red-500'>{errorMessage}</p>
+        ) : !movieList?.length ? (
+          <p className='text-red-500'>No Results Available</p>
         ) : (
           <ul>
             {movieList.map((movie) => (
