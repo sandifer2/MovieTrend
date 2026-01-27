@@ -11,15 +11,14 @@ const LoginPage = () => {
             <header>
                 <h1 className='text-gradient'>Login</h1>
             </header>
-            <form>
+            <form className='flex flex-col items-center'>
             <input
             placeholder='Username'
-
+            className='text-white'
             />
             <input
             placeholder='Password'
-            
-            
+            className='text-white'
             />
             
 
