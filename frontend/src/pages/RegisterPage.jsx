@@ -1,31 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../services/AuthContext';
+import { useState } from "react";
 
+//TODO add show button 
+//maybe use swtich to change between login and sign up 
 
+const RegisterPage = () => {
 
-
-//TODO: add show button
-
-const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-
-    const {user} = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if(user){
-            navigate('/')
-        }
-
-
-
-    },[]);
-
-
 
 
     const handleSubmit = async (e) => {
@@ -33,18 +16,18 @@ const LoginPage = () => {
         setError('');
         setIsLoading(true);
 
-        try {
-            // TODO: Add Appwrite authentication here
-            // Example:
-            // await account.createEmailPasswordSession(email, password);
-            // navigate('/');
-            console.log('Login attempt:', { email, password });
-        } catch (err) {
-            setError(err.message || 'Login failed. Please try again.');
-        } finally {
+        try{
+            //need to add appwrite stuff
+
+            console.log('Login attempt for:', { email });
+        }catch(err){
+           setError(err.message || 'Login failed. Please try again.'); 
+        }finally{
             setIsLoading(false);
         }
-    };
+        
+    }
+
 
     return (
         <main>
@@ -54,10 +37,10 @@ const LoginPage = () => {
                     <div className='bg-dark-100 p-8 sm:p-10 rounded-2xl shadow-inner shadow-light-100/10'>
                         <header className='mb-8'>
                             <h1 className='text-3xl sm:text-4xl'>
-                                Welcome <span className='text-gradient'>Back</span>
+                                Create your <span className='text-gradient'>Account</span>
                             </h1>
                             <p className='text-gray-100 text-center mt-3'>
-                                Sign in to access your favorites
+                                Create an account to access your favorites
                             </p>
                         </header>
 
@@ -103,21 +86,25 @@ const LoginPage = () => {
                                 disabled={isLoading}
                                 className='w-full bg-linear-to-r from-[#D6C7FF] to-[#AB8BFF] text-dark-100 font-bold py-3 px-4 rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed mt-6'
                             >
-                                {isLoading ? 'Signing in...' : 'Sign In'}
+                                {isLoading ? 'Signing up...' : 'Sign Up'}
                             </button>
                         </form>
 
                         <p className='text-gray-100 text-center text-sm mt-6'>
-                            Don't have an account?{' '}
-                            <a href='/register' className='text-gradient font-medium hover:underline'>
-                                Sign up
+                            Already have an account?{' '}
+                            <a href='/login' className='text-gradient font-medium hover:underline'>
+                                Sign in
                             </a>
                         </p>
                     </div>
                 </div>
             </div>
         </main>
-    );
+
+
+    )
+
+
 };
 
-export default LoginPage;
+export default RegisterPage;
