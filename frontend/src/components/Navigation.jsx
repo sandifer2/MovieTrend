@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../services/AuthContext';
-import { Home, Heart, Bot } from 'lucide-react';
+import { Home, Heart, Bot, LogOut } from 'lucide-react';
 
 const Navigation = () => {  
 
@@ -43,10 +43,11 @@ const Navigation = () => {
                                 <Bot size={32} />
                             </NavLink>
 
-                            <NavLink>
-
-                                <button>Logout</button>
-                            </NavLink>
+                            <button
+                                onClick={logoutUser}
+                                className='text-gray-100 hover:text-white transition-colors pb-1'>
+                                <LogOut size={32} />
+                            </button>
                     </div>
                 </div>
             </nav>

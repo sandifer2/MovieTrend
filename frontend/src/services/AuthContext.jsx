@@ -1,12 +1,13 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import Spinner from "../components/Spinner";
+import { account } from "./appwrite";
 
 const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [user, setUser] = useState(true);
+    const [user, setUser] = useState(false);
 
     useEffect(() =>{
         
@@ -14,7 +15,23 @@ export const AuthProvider = ({children}) => {
     
     }, [])
 
-    const loginUser = (userInfo) => {}
+    const loginUser = async (userInfo) => {
+        setIsLoading(true);
+        try{
+            let response = await account.createEmailPasswordSession(
+                userInfo.email,
+                userInfo.password
+            )
+            setUser(response);
+            console.log('SESSION:', response)
+        }catch(error){
+
+        }
+
+
+
+        setIsLoading(false);
+    }
     
     const logoutUser = () => {}
 
@@ -22,10 +39,9 @@ export const AuthProvider = ({children}) => {
 
     const checkStatus = () => {}
 
-    const 
 
 
-    contextData = {
+    const contextData = {
         user,
         loginUser,
         logoutUser,

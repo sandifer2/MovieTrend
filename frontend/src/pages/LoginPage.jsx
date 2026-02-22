@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../services/AuthContext';
 
@@ -13,7 +13,9 @@ const LoginPage = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const {user} = useAuth();
+    const loginForm = useRef(null);
+
+    const {user, loginUser} = useAuth();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -23,7 +25,8 @@ const LoginPage = () => {
 
 
 
-    },[]);
+    },[user]);
+
 
 
 
@@ -33,11 +36,13 @@ const LoginPage = () => {
         setError('');
         setIsLoading(true);
 
+        const userInfo = { email, password };
+
+        
         try {
-            // TODO: Add Appwrite authentication here
-            // Example:
-            // await account.createEmailPasswordSession(email, password);
-            // navigate('/');
+
+            await loginUser(userInfo);
+            
             console.log('Login attempt:', { email, password });
         } catch (err) {
             setError(err.message || 'Login failed. Please try again.');
@@ -61,7 +66,7 @@ const LoginPage = () => {
                             </p>
                         </header>
 
-                        <form onSubmit={handleSubmit} className='space-y-5'>
+                        <form ref={loginForm} onSubmit={handleSubmit} className='space-y-5'>
                             {error && (
                                 <div className='bg-red-500/10 border border-red-500/50 text-red-400 px-4 py-3 rounded-lg text-sm'>
                                     {error}
