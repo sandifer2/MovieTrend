@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../services/AuthContext";
 
 //TODO add show button 
 //maybe use swtich to change between login and sign up 
@@ -11,14 +13,35 @@ const RegisterPage = () => {
     const [error, setError] = useState('');
 
 
+    const { user, registerUser } = useAuth()
+    const navigate = useNavigate();
+
+
+        useEffect(() => {
+        if(user){
+            navigate('/')
+        }
+
+        },[user]);
+
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setIsLoading(true);
 
-        try{
-            //need to add appwrite stuff
+        if(password.length < 8){
+            setError('Password must be at least 8 characters.');
+            setIsLoading(false);
+            return;
+        }
 
+        const userInfo = { password, email }
+
+        try{
+            
+            await registerUser(userInfo);
             console.log('Login attempt for:', { email });
         }catch(err){
            setError(err.message || 'Login failed. Please try again.'); 

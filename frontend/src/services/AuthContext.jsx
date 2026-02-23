@@ -1,5 +1,6 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import Spinner from "../components/Spinner";
+import { ID } from "appwrite";
 import { account } from "./appwrite";
 
 const AuthContext = createContext()
@@ -7,12 +8,10 @@ const AuthContext = createContext()
 export const AuthProvider = ({children}) => {
 
     const [isLoading, setIsLoading] = useState(true);
-    const [user, setUser] = useState(false);
+    const [user, setUser] = useState(null);
 
     useEffect(() =>{
-        
-        setIsLoading(false)
-    
+        checkUserStatus().finally(() => setIsLoading(false))
     }, [])
 
     const loginUser = async (userInfo) => {
@@ -22,9 +21,12 @@ export const AuthProvider = ({children}) => {
                 userInfo.email,
                 userInfo.password
             )
-            setUser(response);
+            const accountData = await account.get()
+
+            setUser(accountData);
             console.log('SESSION:', response)
         }catch(error){
+            console.error(error)
 
         }
 
@@ -33,11 +35,53 @@ export const AuthProvider = ({children}) => {
         setIsLoading(false);
     }
     
-    const logoutUser = () => {}
+    const logoutUser = () => {
+        account.deleteSession('current')
+        setUser(null)
+    }
 
-    const registerUser = (userInfo)  => {}
+    const registerUser = async(userInfo)  => {
+        setIsLoading(true)
+        try{
+            let createResponse = await account.create(
+                ID.unique(),
+                userInfo.email,
+                userInfo.password
+            )
 
-    const checkStatus = () => {}
+            let loginResponse = await account.createEmailPasswordSession(
+                userInfo.email,
+                userInfo.password
+            )
+
+            let accountDetails = await account.get()
+            setUser(accountDetails)
+
+
+
+        }catch(error){
+            console.error(error)
+        }
+
+
+
+
+        setIsLoading(false)
+
+    }
+
+    const checkUserStatus = async() => {
+
+        try{
+
+            let accountDetails = await account.get()
+            setUser(accountDetails)
+        }catch(error){
+            // no active session, user stays null
+        }
+
+
+    }
 
 
 
