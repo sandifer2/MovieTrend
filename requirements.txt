@@ -1,0 +1,15 @@
+Setup Instructions
+===================
+
+1. Backend (Express proxy for OpenAI):
+   cd backend
+   npm install
+   # Add your OPENAI_API_KEY to backend/.env
+   node server.js        # starts on http://localhost:5001
+
+2. Frontend (Vite + React):
+   cd frontend
+   npm install
+   npm run dev            # starts on http://localhost:5173
+
+Both must be running for the AI chat feature to work.

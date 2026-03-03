@@ -1,0 +1,77 @@
+MovieTrend - Screening Call Notes
+====================================
+
+ELEVATOR PITCH
+A full-stack movie discovery app with AI-powered recommendations, built with
+React 19, Appwrite, and OpenAI. Users can search movies, track favorites, and
+chat with an AI assistant for personalized suggestions.
+
+TECH STACK
+- Frontend: React 19, Vite, Tailwind CSS v4, React Router v7
+- Backend: Express.js proxy for OpenAI API
+- Auth & Database: Appwrite (email/password auth, document storage)
+- APIs: TMDB (movie data), OpenAI gpt-4o-mini (recommendations)
+- Libraries: Lucide React (icons), tsparticles (animations), react-use (hooks)
+
+KEY FEATURES TO HIGHLIGHT
+
+1. Authentication System
+   - Full login/register/logout flow with Appwrite
+   - AuthContext provider with custom useAuth hook
+   - Protected routes via a Gatekeeper component (Outlet pattern)
+   - Auto-redirect logic (logged-in users skip login page, etc.)
+
+2. Smart Search with Debouncing
+   - 1-second debounce on search input using react-use to prevent excessive API calls
+   - Every search term is tracked in Appwrite with a count field
+   - Trending section shows top 5 most-searched movies pulled from the database
+
+3. Favorites System
+   - Heart toggle on each movie card with optimistic-style UI updates
+   - Stored per-user in Appwrite, sorted by rating on the Favorites page
+
+4. AI Chat (Full-Stack)
+   - Backend Express proxy keeps the OpenAI API key server-side
+   - Conversational message history sent with each request for context
+   - System prompt scoped to movie recommendations
+   - Auto-scroll, loading indicator, disabled input while waiting
+
+5. UI/UX Polish
+   - Glassmorphism design (backdrop-blur, semi-transparent gradients)
+   - Particle animation background in the chat interface
+   - Custom themed scrollbar, responsive grid (1-4 columns)
+   - Consistent purple/dark color palette
+
+ARCHITECTURE DECISIONS WORTH MENTIONING
+
+- Context API over Redux: App is small enough that React Context handles
+  global auth state cleanly without extra dependencies.
+
+- Backend proxy for OpenAI: Keeps the API key out of the browser bundle.
+  Single POST endpoint forwards the conversation to OpenAI and returns the reply.
+
+- Appwrite as BaaS: Handles auth and database without writing a custom backend,
+  letting the project focus on frontend patterns.
+
+- Debounce pattern: Prevents hammering the TMDB API on every keystroke.
+  The 1-second delay balances responsiveness with efficiency.
+
+TALKING POINTS
+
+- "I built a trending algorithm that tracks what users search for and surfaces
+   the most popular queries — it's a lightweight version of what Netflix does."
+
+- "The AI chat feature is full-stack — I wrote an Express proxy so the API key
+   stays server-side, which is how you'd handle it in production."
+
+- "I used React 19 with the latest Tailwind v4 and Vite — I stay current with
+   the ecosystem."
+
+- "Route protection uses the Outlet pattern from React Router, which keeps the
+   auth logic centralized instead of wrapping every page individually."
+
+PROJECT STRUCTURE
+  frontend/src/pages/       - 5 pages (Home, Login, Register, Favorites, Recommendations)
+  frontend/src/components/  - 8 components (MovieCard, Navigation, ChatBox, etc.)
+  frontend/src/services/    - Auth context, Appwrite config, route guard
+  backend/                  - Express server proxying OpenAI
